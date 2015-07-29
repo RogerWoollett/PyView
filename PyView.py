@@ -92,7 +92,7 @@ class App(tk.Tk):
 		
 	def show_about(self):
 		# show the about box
-		msg.showinfo('About', 'PyView a program to show system data \n written by Roger Woollett')
+		msg.showinfo('About', 'PyView - 1.0\nA program to show system data \nwritten by Roger Woollett')
 		
 	def show_view(self,view):
 		# switch to the selected view
