@@ -21,7 +21,7 @@ class Trace():
 		self.lines=[]
 		i = 0
 		while i < master.width:
-			self.lines.append(master.create_line(i,0,i,0,fill = colour,width = size))
+			self.lines.append(master.create_line(i,0,i,0,fill = colour))
 			i += 1
 			
 	def scrollex(self,miny,maxy):
@@ -40,7 +40,7 @@ class Trace():
 		# we want positive upwards
 		value = self.master.height - value           
 		# add new value
-		self.master.coords(self.lines[0],0,value,0,value + self.size)
+		self.master.coords(self.lines[0],0,value - self.size,0,value + self.size)
 		
 	def clear(self):
 		# clear the trace
