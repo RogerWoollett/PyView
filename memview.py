@@ -8,7 +8,7 @@ else:
 	import tkinter as tk
 	
 import psutil as ps
-from graph import ScrollGraph,XAxis
+from graph import ScrollGraph,XAxis,YAxis
 
 class MemLabel(tk.Frame):
 	def __init__(self,master,*args,**kwargs):
@@ -25,24 +25,30 @@ class MemView(tk.Frame):
 		tk.Frame.__init__(self,master,*args,**kwargs)
 		
 		col0 = 100
+		yaxis = 10
+		graphheight = 300
 		self.columnconfigure(0,minsize = col0)
 		
-		tk.Label(self,text = 'Memory use (total - available)').grid(row = 0,column = 1)
+		tk.Label(self,text = 'Memory use (total - available)').grid(row = 0,column = 2)
 		
 		self.lab = MemLabel(self,bd = 0)
 		self.lab.grid(row = 1,column = 0)
 		
-		graphwidth = self['width'] - col0
+		graphwidth = self['width'] - col0 - yaxis
 		self.graph = ScrollGraph(self \
-					,width = graphwidth, height = 200 \
+					,width = graphwidth, height = graphheight \
 					,borderwidth = 0,highlightthickness = 0)
-		self.graph.grid(row = 1,column = 1)
+		self.graph.grid(row = 1,column = 2)
 		
 		self.graph.add_trace('mem',1000,0,colour = 'red')
 		
 		# create an X axis without ticks to show a base line
 		XAxis(self,0,0,width = graphwidth,height = 4,bd = 0,highlightthickness = 0) \
-		.grid(row = 2,column = 1)
+		.grid(row = 2,column = 2)
+		
+		# create a Y axis with ticks at 0,25,75,100 percent
+		YAxis(self,graphheight/4,graphheight/20,height = graphheight,width = yaxis,bd = 0,highlightthickness = 0) \
+		.grid(row = 1,column = 1)
 		
 	def bump(self):
 		 x = ps.virtual_memory()

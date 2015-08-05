@@ -83,7 +83,7 @@ class ScrollGraph(tk.Canvas):
 			self.traces[trace].clear()
 		
 class XAxis(tk.Canvas):
-	# class to show horizantal x axis with ticks
+	# class to show horiz0ntal x axis with ticks
 	def __init__(self,master,big,small,size = 1,*args,**kwargs):
 		tk.Canvas.__init__(self,master,*args,**kwargs)
 		
@@ -105,3 +105,30 @@ class XAxis(tk.Canvas):
 			while i < width:
 				self.create_line(i,0,i,height,width = size)
 				i += big
+
+class YAxis(tk.Canvas):
+	# class to show vertical Y axis with ticks
+	def __init__(self,master,big,small,size = 1,*args,**kwargs):
+		tk.Canvas.__init__(self,master,*args,**kwargs)
+		
+		width = int(self['width'])
+		height = int(self['height'])
+		rhs = width - 1
+		
+		self.create_line(rhs,0,rhs,height-1,width = size)
+			
+		# do small ticks
+		if small > 0:
+			tick = width/2
+			i = height - small - 1
+			while i >= 0:
+				self.create_line(rhs,i,rhs - tick,i,width = size)
+				i -= small
+			
+		# do big ticks
+		if big > 0:
+			tick = width
+			i = height
+			while i >= 0:
+				self.create_line(rhs,i,rhs - tick,i,width = size)
+				i -= big

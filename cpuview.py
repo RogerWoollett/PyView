@@ -8,7 +8,7 @@ else:
 	import tkinter as tk
 	
 import psutil as ps
-from graph import ScrollGraph,XAxis
+from graph import ScrollGraph,XAxis,YAxis
 	
 class CpuLabel(tk.Frame):
 	# helper class for CpuGraph
@@ -29,6 +29,9 @@ class CpuGraph(tk.Frame):
 		tk.Frame.__init__(self,master,*args,**kwargs)
 		
 		col0 = 60
+		xaxis = 4
+		yaxis = 4
+		graphheight = self['height'] - xaxis 
 		self.columnconfigure(0,minsize = col0)
 
 		# create labels for col 0
@@ -36,15 +39,19 @@ class CpuGraph(tk.Frame):
 		self.lab.grid(column = 0,row = 0)
 		
 		# create graph in col 1
-		graphwidth = self['width'] - col0
+		graphwidth = self['width'] - col0 - yaxis
 		self.graph = ScrollGraph(self \
-					,width = graphwidth, height = self['height'] \
+					,width = graphwidth, height = graphheight \
 					,borderwidth = 0,highlightthickness = 0)
-		self.graph.grid(row = 0,column = 1)
+		self.graph.grid(row = 0,column = 2)
 		
 		# create an X axis without ticks to show a base line
-		XAxis(self,0,0,width = graphwidth,height = 4,bd = 0,highlightthickness = 0) \
-		.grid(row = 1,column = 1)
+		XAxis(self,0,0,width = graphwidth,height = xaxis,bd = 0,highlightthickness = 0) \
+		.grid(row = 1,column = 2)
+		
+		#create a Y axis without ticks
+		YAxis(self,0,0,width = yaxis,height = graphheight,bd = 0,highlightthickness = 0) \
+		.grid(row = 0,column = 1)
 		
 	def set_sys(self,value):
 		self.lab.sys.configure(text = value)
