@@ -10,6 +10,7 @@ else:
 import os
 import platform as pl
 import psutil as ps
+import pwd
 
 class OsView(tk.Frame):
 	def __init__(self,master,*args,**kwargs):
@@ -20,7 +21,9 @@ class OsView(tk.Frame):
 
 		row = 0
 		
-		self.add_entry(row,'User id: ',os.getlogin())
+		# jessie has a bug so this fails
+		#self.add_entry(row,'User id: ',os.getlogin())
+		self.add_entry(row,'User id ',pwd.getpwuid(os.getuid())[0])
 		row += 1 
 		self.add_entry(row,'Machine id: ',pl.node())
 		row += 1
